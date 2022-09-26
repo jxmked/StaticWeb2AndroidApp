@@ -10,10 +10,8 @@
         <meta name="keywords" content="Tester,typescript,javascript">
         <meta name="robots" content="index,follow">
         <meta name="referrer" content="origin">
-        <!-- Google tag (gtag.js) -->
-        <script async src="https://www.googletagmanager.com/gtag/js?id=G-JPJZGW7PW6"></script>
-        <script type="text/javascript">
-            
+        
+        <script type="application/javascript">
             function onClickEvent(element) {
                 var url = element.getAttribute("href");
                 
@@ -23,34 +21,47 @@
                     });
                 });
             }
-            
+
+            // Google tag (gtag.js)    
             (function(id){
+                if(window.location.protocol.toString() != "https:")
+                    return;
+
+                var scr = document.createElement("script");
+                scr.setAttribute("src", "https://www.googletagmanager.com/gtag/js?id=" + id);
+                scr.async = true;
+                scr.setAttribute("type", "application/javascript");
+
+                document.getElementsByTagName('head')[0].appendChild(scr);
+
                 window.dataLayer = window.dataLayer || [];
                 window.gtag = window.gtag || function() {
                     dataLayer.push(arguments);
                 };
-                
-                if(window.location.protocol.toString() == "https:") {
-                    gtag('js', new Date());
-                    gtag('config', id);
-                    
-                    document.querySelectorAll(".listen-on-click").forEach(function(element) {
+
+                gtag('js', new Date());
+                gtag('config', id);
+                document.addEventListener("DOMContentLoaded", function(){
+                    Array.prototype.forEach.call(document.getElementsByClassName("listen-on-click"), function(element){
                         onClickEvent(element);
                     });
-                }
-            })("G-JPJZGW7PW6");
+                });
+            }("G-JPJZGW7PW6"));
         </script>
         
         <link rel="apple-touch-icon" sizes="180x180" href="assets/apple-touch-icon.png">
         <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32x32.png">
         <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon-16x16.png">
+
         <title>Quick Browser Tester &dash; xCreation</title>
+
         <link rel="stylesheet" href="assets/fonts/caviar-dreams/stylesheet.css">
         <link rel="stylesheet" href="assets/fonts/montserrat/stylesheet.css">
         <link rel="stylesheet" href="assets/icons/icon-v1.css">
         <link rel="stylesheet" href="dist/main.css">
+        
         <script src="assets/lib/require.js" data-main="dist/main" type="application/javascript" charset="utf-8"></script>
-        <script src="assets/lib/modernizr-custom.js" type="application/javascript" charset="utf-8" defer></script>
+        <script src="assets/lib/modernizr-custom.js" type="application/javascript" charset="utf-8"></script>
     </head>
     <body>
         <nav id="top-nav">
@@ -82,7 +93,7 @@
                 <div class="row description-row">
                     <label class="header-color header-label header-bold">About result</label>
                     <article>
-                        This result are based on <a class="listen-on-click" href="https://modernizr.com/" target="_blank">Modernizr</a> testing kit.
+                        This result are based on <a class="header-bold listen-on-click" href="https://modernizr.com/" target="_blank">Modernizr</a> testing kit.
                     </article>
                 </div>
             </div>

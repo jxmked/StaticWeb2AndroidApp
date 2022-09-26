@@ -1,3 +1,12 @@
+var __spreadArray = (this && this.__spreadArray) || function (to, from, pack) {
+    if (pack || arguments.length === 2) for (var i = 0, l = from.length, ar; i < l; i++) {
+        if (ar || !(i in from)) {
+            if (!ar) ar = Array.prototype.slice.call(from, 0, i);
+            ar[i] = from[i];
+        }
+    }
+    return to.concat(ar || Array.prototype.slice.call(from));
+};
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -37,14 +46,110 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
-define(["require", "exports", "./Level_1_Item_Boolean", "./Level_2_Item"], function (require, exports, Level_1_Item_Boolean_1, Level_2_Item_1) {
+define("Level_1_Item_Boolean", ["require", "exports"], function (require, exports) {
+    "use strict";
+    Object.defineProperty(exports, "__esModule", { value: true });
+    var Level_1_Item_Boolean = (function () {
+        function Level_1_Item_Boolean(name, value) {
+            this.name = name;
+            this.value = value;
+            this.classNames = ["item", "icons"];
+            if (this.value) {
+                this.classNames.push(Level_1_Item_Boolean.if_true);
+            }
+            else {
+                this.classNames.push(Level_1_Item_Boolean.if_false);
+            }
+        }
+        Object.defineProperty(Level_1_Item_Boolean.prototype, "element", {
+            get: function () {
+                var li = document.createElement("li");
+                var span = document.createElement("span");
+                li.setAttribute("class", "lvl-1");
+                span.appendChild(document.createTextNode(this.name));
+                span.setAttribute("class", this.classNames.join(" "));
+                li.appendChild(span);
+                return li;
+            },
+            enumerable: false,
+            configurable: true
+        });
+        Level_1_Item_Boolean.if_true = "icon-checkmark";
+        Level_1_Item_Boolean.if_false = "icon-cross";
+        return Level_1_Item_Boolean;
+    }());
+    exports.default = Level_1_Item_Boolean;
+});
+define("Level_2_Item", ["require", "exports"], function (require, exports) {
+    "use strict";
+    Object.defineProperty(exports, "__esModule", { value: true });
+    var Level_2_Item = (function () {
+        function Level_2_Item(name, value) {
+            this.classNames = ["item", "icons"];
+            this.value = value;
+            this.name = name;
+        }
+        Object.defineProperty(Level_2_Item.prototype, "element", {
+            get: function () {
+                var li = document.createElement("li");
+                li.setAttribute("class", "lvl-2");
+                li.appendChild(this.createLabel());
+                li.appendChild(this.createSubList());
+                return li;
+            },
+            enumerable: false,
+            configurable: true
+        });
+        Level_2_Item.prototype.createLabel = function () {
+            var lb = document.createElement("label");
+            lb.appendChild(document.createTextNode(this.name));
+            return lb;
+        };
+        Level_2_Item.prototype.createSubList = function () {
+            var _this = this;
+            var ul = document.createElement("ul");
+            Object.entries(this.value).forEach(function (value) {
+                ul.appendChild(_this.createListSpan.apply(_this, value));
+            });
+            return ul;
+        };
+        Level_2_Item.prototype.createListSpan = function (name, value) {
+            var li = document.createElement("li");
+            var sp = document.createElement("span");
+            var classNames = __spreadArray([], this.classNames, true);
+            sp.appendChild(document.createTextNode(name));
+            if (this.is_boolean(value)) {
+                classNames.push(name == String(name) ? Level_2_Item.if_true : Level_2_Item.if_false);
+                sp.setAttribute("class", classNames.join(" "));
+            }
+            else {
+                var lp = document.createElement("span");
+                lp.appendChild(document.createTextNode(String(value)));
+                sp.appendChild(document.createTextNode(" - "));
+                sp.appendChild(lp);
+                lp.setAttribute("style", "color: rgb(48, 209, 88);");
+            }
+            li.setAttribute("class", "lvl-1");
+            li.appendChild(sp);
+            return li;
+        };
+        Level_2_Item.prototype.is_boolean = function (val) {
+            var param = String(val);
+            return (param == "true" || param == "false");
+        };
+        Level_2_Item.if_true = "icon-checkmark";
+        Level_2_Item.if_false = "icon-cross";
+        return Level_2_Item;
+    }());
+    exports.default = Level_2_Item;
+});
+define("main", ["require", "exports", "Level_1_Item_Boolean", "Level_2_Item"], function (require, exports, Level_1_Item_Boolean_1, Level_2_Item_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     Level_1_Item_Boolean_1 = __importDefault(Level_1_Item_Boolean_1);
     Level_2_Item_1 = __importDefault(Level_2_Item_1);
     var Main = (function () {
         function Main(mdnzr) {
-            this.items = [];
             this.dom_ul = document.getElementById("items");
             this.test_label_status = document.getElementById("test-label-status");
             var fragments = document.createDocumentFragment();
@@ -69,4 +174,3 @@ define(["require", "exports", "./Level_1_Item_Boolean", "./Level_2_Item"], funct
         });
     }); })();
 });
-//# sourceMappingURL=main.js.map
