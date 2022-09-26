@@ -1,0 +1,1 @@
+# Attemping to use web view to act static web app as native app
