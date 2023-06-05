@@ -16,4 +16,3 @@ Change these files according to your needs
 - And the path to `WebViewActivity.java`
 
 Inspired by [android-webpage-app](https://github.com/laxika/android-webpage-app)
-
